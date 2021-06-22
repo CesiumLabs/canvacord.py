@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "canvacord-py"
+version = "0.1.0"
+description = "Python version of canvacord"
+authors = ["Samrid Pandit <samrid.pandit@gmail.com>"]
+license = "MIT"
+
+
+[tool.poetry.dependencies]
+python = "^3.9"
+Pillow = "^8.2.0"
+
+[tool.poetry.dev-dependencies]
+black = "^21.6b0"
+isort = "^5.8.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
