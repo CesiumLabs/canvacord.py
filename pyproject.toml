@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "canvacord-py"
+version = "0.0.1"
+description = "Asynchronous image manipulation library built on good intentions"
+authors = ["Samrid Pandit <samrid.pandit@gmail.com>", "Ammar <amarftw1@gmail.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+"discord.py" = "^1.7.3"
+requests = "^2.26.0"
+
+[tool.poetry.dev-dependencies]
+black = {version = "^21.7b0", allow-prereleases = true}
+isort = "^5.9.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
