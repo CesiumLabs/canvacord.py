@@ -4,7 +4,7 @@ from PIL import Image
 
 from canvacord.helper.image import ImageHelper
 from canvacord.types import UserType
-from canvacord.utils import _parse_user
+from canvacord.helper.utils import _parse_user
 
 
 class FunGenerator:
