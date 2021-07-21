@@ -1,3 +1,4 @@
+from canvacord.types import ImageCacheDict
 import os
 import pathlib
 from pathlib import Path
@@ -13,9 +14,22 @@ class ImageCache:
         self.directory = directory or IMAGE_ASSET_DIRECTORY
 
         # Loads all the images from the provided directory
-        self.images: dict[str, Image.Image] = {
-            path: Image.open(self.directory / path).convert("RGBA")
-            for path in os.listdir(self.directory)
+        self.load_images(self.directory)
+
+    def load_images(self, directory: Path) -> ImageCacheDict:
+        images_cache: ImageCacheDict = {
+            path: Image.open(directory / path).convert("RGBA")
+            for path in os.listdir(directory)
             if path
         }
-        print(self.images)
+
+        try:
+            self.images_cache = images_cache | self.images_cache
+        except AttributeError:
+            self.images_cache = images_cache
+
+        return self.images_cache
+
+    def load_image(self, image: Path) -> ImageCacheDict:
+        file_name = ''.join(str(image).split('.').pop(-1))
+        self.images_cache[file_name] = Image.open(image) 
