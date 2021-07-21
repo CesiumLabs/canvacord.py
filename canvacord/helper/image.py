@@ -22,11 +22,13 @@ class ImageHelper:
 
         self.images = self._assets.images
 
-    def resize(self, img: Image.Image, size: float) -> Image.Image:
+    @classmethod
+    def resize(cls, img: Image.Image, size: float) -> Image.Image:
         return img.resize([int(size * s) for s in img.size])
 
+    @classmethod
     def manipulate_image(
-        self,
+        cls,
         x: int,
         y: int,
         background: Image.Image,
@@ -37,12 +39,12 @@ class ImageHelper:
         fore_transparency: int = 255,
     ) -> Image.Image:
         if back_size != 1:
-            background = self.resize(background, back_size)
+            background = cls.resize(background, back_size)
         if back_transparency != 255:
             background.putalpha(back_transparency)
 
         if fore_size != 1:
-            foreground = self.resize(foreground, fore_size)
+            foreground = cls.resize(foreground, fore_size)
         if fore_transparency != 255:
             foreground.putalpha(fore_transparency)
 
