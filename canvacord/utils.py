@@ -6,12 +6,14 @@ import aiohttp
 import discord
 from PIL import Image
 
+from canvacord.types import UserType
+
 _T = TypeVar("_T")
 
 
 def _parse_user(f: _T) -> _T:
     @wraps(f)
-    async def wrapper(generator, avatar, *args, **kwargs):
+    async def wrapper(generator: type, avatar: UserType, *args, **kwargs):
         ses = aiohttp.ClientSession()
 
         if isinstance(avatar, str):
