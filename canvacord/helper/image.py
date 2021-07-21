@@ -20,7 +20,7 @@ class ImageHelper:
             images_cache if images_cache else ImageCache(self._image_asset_directory)
         )
 
-        self.images = self._assets.images
+        self.images_cache = self._assets.images_cache
 
     @classmethod
     def resize(cls, img: Image.Image, size: float) -> Image.Image:
