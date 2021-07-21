@@ -4,8 +4,8 @@ import io
 import aiohttp
 
 from canvacord.helper.image import ImageHelper
-from canvacord.types import UserType
 from canvacord.helper.utils import manipulation
+from canvacord.types import UserType
 
 
 class FunGenerator:

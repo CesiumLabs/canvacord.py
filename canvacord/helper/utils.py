@@ -39,7 +39,7 @@ def manipulation(func: _T) -> _T:
     async def wrapper(gen: type, avatar: UserType, *args, **kwargs):
         session = gen._session
         new_avatar = await _user_parser(avatar, session)
-        
+
         image = await func(gen, new_avatar, *args, **kwargs)
         return _image_to_bytesio(image)
 

@@ -1,10 +1,11 @@
-from canvacord.types import ImageCacheDict
 import os
 import pathlib
 from pathlib import Path
 from typing import Optional
 
 from PIL import Image
+
+from canvacord.types import ImageCacheDict
 
 IMAGE_ASSET_DIRECTORY = Path("canvacord/assets/images")
 
@@ -31,5 +32,5 @@ class ImageCache:
         return self.images_cache
 
     def load_image(self, image: Path) -> ImageCacheDict:
-        file_name = ''.join(str(image).split('.').pop(-1))
-        self.images_cache[file_name] = Image.open(image) 
+        file_name = "".join(str(image).split(".").pop(-1))
+        self.images_cache[file_name] = Image.open(image)

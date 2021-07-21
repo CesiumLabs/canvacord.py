@@ -1,5 +1,7 @@
 from typing import Optional
+
 import aiohttp
+
 from canvacord.generator.fun import FunGenerator
 
 
