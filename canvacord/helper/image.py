@@ -23,13 +23,15 @@ class ImageHelper:
         self.images_cache = self._assets.images_cache
 
     @classmethod
-    def resize(cls, img: Image.Image, size: Union[float, tuple[int, int]]) -> Image.Image:
+    def resize(
+        cls, img: Image.Image, size: Union[float, tuple[int, int]]
+    ) -> Image.Image:
         if isinstance(size, float):
             return img.resize([int(size * s) for s in img.size])
         elif isinstance(size, tuple):
             return img.resize(size)
         else:
-            raise TypeError('Float, Tuple[int, int] was expected as the resize value')
+            raise TypeError("Float, Tuple[int, int] was expected as the resize value")
 
     @classmethod
     def manipulate_image(

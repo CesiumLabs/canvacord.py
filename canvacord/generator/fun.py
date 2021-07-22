@@ -56,6 +56,6 @@ class FunGenerator:
             y=28,
             background=self.image_helper.images_cache["hitler.png"],
             foreground=user,
-            fore_size=0.6
+            fore_size=0.6,
         )
         return avatar
