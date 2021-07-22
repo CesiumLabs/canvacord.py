@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Union
 
 from PIL import Image
 
@@ -23,8 +23,13 @@ class ImageHelper:
         self.images_cache = self._assets.images_cache
 
     @classmethod
-    def resize(cls, img: Image.Image, size: float) -> Image.Image:
-        return img.resize([int(size * s) for s in img.size])
+    def resize(cls, img: Image.Image, size: Union[float, tuple[int, int]]) -> Image.Image:
+        if isinstance(size, float):
+            return img.resize([int(size * s) for s in img.size])
+        elif isinstance(size, tuple):
+            return img.resize(size)
+        else:
+            raise TypeError('Float, Tuple[int, int] was expected as the resize value')
 
     @classmethod
     def manipulate_image(
@@ -33,9 +38,9 @@ class ImageHelper:
         y: int,
         background: Image.Image,
         foreground: Image.Image,
-        back_size: float = 1,
+        back_size: Union[float, tuple[int, int]] = 1,
         back_transparency: int = 255,
-        fore_size: float = 1,
+        fore_size: Union[float, tuple[int, int]] = 1,
         fore_transparency: int = 255,
     ) -> Image.Image:
         if back_size != 1:
