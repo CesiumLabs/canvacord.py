@@ -30,7 +30,7 @@ class FunGenerator:
             self.image_helper.manipulate_image,
             x=0,
             y=0,
-            round=user,
+            background=user,
             foreground=self.image_helper.images_cache["gay.png"],
             fore_transparency=80,
         )
