@@ -1,4 +1,5 @@
 import sys
+
 import aiohttp
 
 sys.path.append(".")
@@ -20,4 +21,3 @@ async def test_jail():
         second_image = Image.open("tests/assets/jail.png")
 
         assert frist_image == second_image
-        
