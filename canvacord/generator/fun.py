@@ -79,3 +79,15 @@ class FunGenerator:
             fore_size=(180, 180),
         )
         return second_image
+
+    @manipulation
+    async def wanted(self, user: UserType) -> io.BytesIO:
+        avatar = await asyncio.to_thread(
+            self.image_helper.manipulate_image,
+            x=269,
+            y=451,
+            background=self.image_helper.images_cache["wanted.png"],
+            foreground=user,
+            fore_size=(395, 395),
+        )
+        return avatar
