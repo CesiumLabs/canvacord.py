@@ -4,7 +4,7 @@ import io
 import httpx
 
 from canvacord.helper.image import ImageHelper
-from canvacord.helper.utils import args_parser, image_to_bytesio
+from canvacord.utils import args_parser, image_to_bytesio
 from canvacord.types import UserType
 
 
