@@ -1,10 +1,10 @@
 import io
-from functools import wraps
 import re
+from functools import wraps
 from typing import TypeVar
 
-import httpx
 import discord
+import httpx
 from PIL import Image
 from yarl import URL
 
