@@ -59,3 +59,23 @@ class FunGenerator:
             fore_size=0.6,
         )
         return avatar
+
+    @manipulation
+    async def spank(self, user1: UserType, user2: UserType) -> io.BytesIO:
+        first_image = await asyncio.to_thread(
+            self.image_helper.manipulate_image,
+            x=460,
+            y=100,
+            background=self.image_helper.images_cache["spank.png"],
+            foreground=user1,
+            fore_size=(180, 180),
+        )
+        second_image = await asyncio.to_thread(
+            self.image_helper.manipulate_image,
+            x=710,
+            y=480,
+            background=first_image,
+            foreground=user2,
+            fore_size=(180, 180),
+        )
+        return second_image
