@@ -61,3 +61,14 @@ async def test_wanted():
         )
 
     assert first_image == second_image
+
+
+@pytest.mark.asyncio
+async def test_gay():
+    async with aiohttp.ClientSession() as session:
+        canvacord = Canvacord(session)
+        first_image, second_image = await fun_tester(
+            canvacord.fun.gay, "tests/assets/gay.png", USER_AV
+        )
+
+    assert first_image == second_image
