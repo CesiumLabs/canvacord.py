@@ -1,7 +1,6 @@
-import asyncio
 import io
 from functools import wraps
-from typing import Callable, TypeVar
+from typing import TypeVar
 
 import aiohttp
 import discord
@@ -36,11 +35,19 @@ def _image_to_bytesio(image: Image.Image, format: str = "PNG"):
 
 def manipulation(func: _T) -> _T:
     @wraps(func)
-    async def wrapper(gen: type, avatar: UserType, *args, **kwargs):
+    async def wrapper(gen: type, *args, **kwargs):
         session = gen._session
-        new_avatar = await _user_parser(avatar, session)
+        args = list(args)
 
-        image = await func(gen, new_avatar, *args, **kwargs)
+        for index, arg in enumerate(args):
+            if isinstance(arg, UserType.__args__):
+                args[index] = await _user_parser(arg, session)
+
+        for key, value in kwargs.items():
+            if isinstance(arg, UserType.__args__):
+                kwargs[key] = await _user_parser(value, session)
+
+        image = await func(gen, *args, **kwargs)
         return _image_to_bytesio(image)
 
     return wrapper
