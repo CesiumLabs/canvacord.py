@@ -47,3 +47,15 @@ class FunGenerator:
             fore_size=0.35,
         )
         return avatar
+
+    @manipulation
+    async def hitler(self, user: UserType) -> io.BytesIO:
+        avatar = await asyncio.to_thread(
+            self.image_helper.manipulate_image,
+            x=40,
+            y=28,
+            background=self.image_helper.images_cache["hitler.png"],
+            foreground=user,
+            fore_size=0.6
+        )
+        return avatar
