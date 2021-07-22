@@ -4,8 +4,8 @@ import io
 import httpx
 
 from canvacord.helper.image import ImageHelper
-from canvacord.utils import args_parser, image_to_bytesio
 from canvacord.types import UserType
+from canvacord.utils import args_parser, image_to_bytesio
 
 
 class FunGenerator:
