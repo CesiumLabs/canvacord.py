@@ -1,14 +1,14 @@
 from typing import Optional
 
-import aiohttp
+import httpx
 
 from canvacord.generator.fun import FunGenerator
 
 
 class Canvacord:
-    def __init__(self, session: Optional[aiohttp.ClientSession] = None) -> None:
-        self._session = session or aiohttp.ClientSession()
-        self._fun_client = FunGenerator(self._session)
+    def __init__(self, async_client: Optional[httpx.AsyncClient] = None) -> None:
+        self._async_client = async_client or httpx.AsyncClient()
+        self._fun_client = FunGenerator(self._async_client)
 
     @property
     def fun(self) -> FunGenerator:

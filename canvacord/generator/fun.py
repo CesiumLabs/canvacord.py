@@ -1,7 +1,7 @@
 import asyncio
 import io
 
-import aiohttp
+import httpx
 
 from canvacord.helper.image import ImageHelper
 from canvacord.helper.utils import args_parser, image_to_bytesio
@@ -9,9 +9,9 @@ from canvacord.types import UserType
 
 
 class FunGenerator:
-    def __init__(self, session: aiohttp.ClientSession) -> None:
+    def __init__(self, async_client: httpx.AsyncClient) -> None:
         self.image_helper = ImageHelper()
-        self.session = session
+        self.async_client = async_client
 
     @args_parser
     async def jail(self, user: UserType) -> io.BytesIO:

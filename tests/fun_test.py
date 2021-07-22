@@ -1,8 +1,9 @@
+import io
 import pathlib
 import sys
-from typing import Callable
+from typing import Any, Callable
 
-import aiohttp
+import httpx
 
 sys.path.append(".")
 
@@ -14,7 +15,9 @@ from canvacord import Canvacord
 USER_AV = "https://cdn.discordapp.com/avatars/438741869107871775/d8383a718f0574e7dc6670e951a6ba4b.png?size=256"
 
 
-async def fun_tester(method: Callable, image_path: pathlib.Path, *args):
+async def fun_tester(
+    method: Callable[[Any], io.BytesIO], image_path: pathlib.Path, *args
+):
     image = await method(*args)
     first_image = Image.open(image)
     second_image = Image.open(image_path)
@@ -23,8 +26,8 @@ async def fun_tester(method: Callable, image_path: pathlib.Path, *args):
 
 @pytest.mark.asyncio
 async def test_jail():
-    async with aiohttp.ClientSession() as session:
-        canvacord = Canvacord(session)
+    async with httpx.AsyncClient() as async_client:
+        canvacord = Canvacord(async_client)
         first_image, second_image = await fun_tester(
             canvacord.fun.jail, "tests/assets/jail.png", USER_AV
         )
@@ -33,8 +36,8 @@ async def test_jail():
 
 @pytest.mark.asyncio
 async def test_hitler():
-    async with aiohttp.ClientSession() as session:
-        canvacord = Canvacord(session)
+    async with httpx.AsyncClient() as async_client:
+        canvacord = Canvacord(async_client)
         first_image, second_image = await fun_tester(
             canvacord.fun.hitler, "tests/assets/hitler.png", USER_AV
         )
@@ -43,8 +46,8 @@ async def test_hitler():
 
 @pytest.mark.asyncio
 async def test_spank():
-    async with aiohttp.ClientSession() as session:
-        canvacord = Canvacord(session)
+    async with httpx.AsyncClient() as async_client:
+        canvacord = Canvacord(async_client)
         first_image, second_image = await fun_tester(
             canvacord.fun.spank, "tests/assets/spank.png", USER_AV, USER_AV
         )
@@ -54,8 +57,8 @@ async def test_spank():
 
 @pytest.mark.asyncio
 async def test_wanted():
-    async with aiohttp.ClientSession() as session:
-        canvacord = Canvacord(session)
+    async with httpx.AsyncClient() as async_client:
+        canvacord = Canvacord(async_client)
         first_image, second_image = await fun_tester(
             canvacord.fun.wanted, "tests/assets/wanted.png", USER_AV
         )
@@ -65,8 +68,8 @@ async def test_wanted():
 
 @pytest.mark.asyncio
 async def test_gay():
-    async with aiohttp.ClientSession() as session:
-        canvacord = Canvacord(session)
+    async with httpx.AsyncClient() as async_client:
+        canvacord = Canvacord(async_client)
         first_image, second_image = await fun_tester(
             canvacord.fun.gay, "tests/assets/gay.png", USER_AV
         )
