@@ -1,6 +1,6 @@
-from typing import Callable
 import pathlib
 import sys
+from typing import Callable
 
 import aiohttp
 
