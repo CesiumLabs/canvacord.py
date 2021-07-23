@@ -1,0 +1,1 @@
+from .fun import FunGenerator
