@@ -1,6 +1,0 @@
-discord_ext_menus==1.0.0a30+g309c702
-aiohttp==3.7.3
-discord==1.7.3
-httpx==0.18.2
-Pillow==8.3.1
-pytest==6.2.4
