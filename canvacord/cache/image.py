@@ -13,8 +13,8 @@ IMAGE_ASSET_DIRECTORY = Path("canvacord/assets/images")
 class ImageCache:
     def __init__(self, directory: Optional[Path] = None) -> None:
         self.directory = directory or IMAGE_ASSET_DIRECTORY
+        self.images_cache = {}
 
-        # Loads all the images from the provided directory
         self.load_images(self.directory)
 
     def load_images(self, directory: Path) -> ImageCacheDict:
@@ -24,13 +24,6 @@ class ImageCache:
             if path
         }
 
-        try:
-            self.images_cache = images_cache | self.images_cache
-        except AttributeError:
-            self.images_cache = images_cache
+        self.images_cache.update(images_cache)
 
         return self.images_cache
-
-    def load_image(self, image: Path) -> ImageCacheDict:
-        file_name = "".join(str(image).split(".").pop(-1))
-        self.images_cache[file_name] = Image.open(image)
