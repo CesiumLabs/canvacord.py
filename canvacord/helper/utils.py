@@ -1,10 +1,12 @@
 import io
 import re
-from functools import wraps
-from typing import TypeVar
+from typing import TypeVar, TYPE_CHECKING, Union
 
+if TYPE_CHECKING:
+    from canvacord.generator import FunGenerator, RankCard, WelcomeCard
+
+import aiohttp
 import discord
-import httpx
 from PIL import Image
 
 from canvacord.types import UserType
@@ -12,16 +14,17 @@ from canvacord.types import UserType
 _T = TypeVar("_T")
 
 URL_REGEX = re.compile(
-    "http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+"
+    "http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*(),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+"
 )
 
 
 async def _user_parser(
-    avatar: UserType, async_client: httpx.AsyncClient
+        avatar: UserType, async_client: aiohttp.ClientSession
 ) -> Image.Image:
     if isinstance(avatar, str):
         if URL_REGEX.findall(avatar):
-            return Image.open(io.BytesIO((await async_client.get(avatar)).read()))
+            async with async_client.get(avatar) as resp:
+                return Image.open(io.BytesIO((await resp.read())))
         return Image.open(avatar).convert("RGB")
 
     elif isinstance(avatar, (discord.Member, discord.User)):
@@ -39,16 +42,15 @@ async def _user_parser(
     return avatar
 
 
-def image_to_bytesio(image: Image.Image, format: str = "PNG"):
+def image_to_bytesio(image: Image.Image, imgformat: str = "PNG") -> io.BytesIO:
     b = io.BytesIO()
-    image.save(b, format=format)
+    image.save(b, format=imgformat)
     b.seek(0)
     return b
 
 
-def args_parser(func: _T) -> _T:
-    @wraps(func)
-    async def wrapper(gen: type, *args, **kwargs):
+def args_parser(func):
+    async def wrapper(gen: Union['FunGenerator', 'RankCard', 'WelcomeCard'], *args, **kwargs):
         async_client = gen.async_client
         args = list(args)
 
