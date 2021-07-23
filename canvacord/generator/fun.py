@@ -1,15 +1,15 @@
 import asyncio
 import io
 
-import httpx
+import aiohttp
 
 from canvacord.helper.image import ImageHelper
 from canvacord.types import UserType
-from canvacord.utils import args_parser, image_to_bytesio
+from canvacord.helper.utils import args_parser, image_to_bytesio
 
 
 class FunGenerator:
-    def __init__(self, async_client: httpx.AsyncClient) -> None:
+    def __init__(self, async_client: aiohttp.ClientSession) -> None:
         self.image_helper = ImageHelper()
         self.async_client = async_client
 
