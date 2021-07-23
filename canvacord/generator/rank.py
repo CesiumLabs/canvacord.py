@@ -1,0 +1,2 @@
+class RankCard:
+    pass
