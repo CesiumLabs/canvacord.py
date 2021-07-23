@@ -22,7 +22,7 @@ async def _user_parser(
     if isinstance(avatar, str):
         if URL_REGEX.findall(avatar):
             return Image.open(io.BytesIO((await async_client.get(avatar)).read()))
-        return Image.open(avatar)
+        return Image.open(avatar).convert("RGB")
 
     elif isinstance(avatar, (discord.Member, discord.User)):
         return Image.open(io.BytesIO(await avatar.avatar_url.read()))
@@ -30,11 +30,11 @@ async def _user_parser(
     elif isinstance(avatar, bytes):
         return Image.open(io.BytesIO(avatar))
 
-    elif isinstance(avatar, io.BytesIO()):
+    elif isinstance(avatar, io.BytesIO):
         return Image.open(avatar)
 
     elif not isinstance(avatar, Image.Image):
-        raise Exception("User not found.")
+        raise TypeError("Not a valid UserType")
 
     return avatar
 
