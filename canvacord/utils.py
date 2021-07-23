@@ -1,4 +1,3 @@
-from canvacord.generator.fun import FunGenerator
 import io
 import re
 from functools import wraps
@@ -7,7 +6,6 @@ from typing import TypeVar
 import discord
 import httpx
 from PIL import Image
-from yarl import URL
 
 from canvacord.types import UserType
 
@@ -50,7 +48,7 @@ def image_to_bytesio(image: Image.Image, format: str = "PNG"):
 
 def args_parser(func: _T) -> _T:
     @wraps(func)
-    async def wrapper(gen: FunGenerator, *args, **kwargs):
+    async def wrapper(gen: type, *args, **kwargs):
         async_client = gen.async_client
         args = list(args)
 
