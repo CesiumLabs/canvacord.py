@@ -28,7 +28,7 @@ async def _user_parser(
         return Image.open(io.BytesIO(await avatar.avatar_url.read()))
 
     elif isinstance(avatar, bytes):
-        return Image.open(io.BytesIO(bytes))
+        return Image.open(io.BytesIO(avatar))
 
     elif isinstance(avatar, io.BytesIO()):
         return Image.open(avatar)
