@@ -2,7 +2,7 @@ from typing import Optional
 
 import httpx
 
-from canvacord.generator.fun import FunGenerator
+from canvacord.generator import FunGenerator
 
 
 class Canvacord:
