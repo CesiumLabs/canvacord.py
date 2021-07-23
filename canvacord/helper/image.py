@@ -30,8 +30,6 @@ class ImageHelper:
             return img.resize([int(size * s) for s in img.size])
         elif isinstance(size, tuple):
             return img.resize(size)
-        else:
-            raise TypeError("Float, Tuple[int, int] was expected as the resize value")
 
     @classmethod
     def manipulate_image(
