@@ -19,12 +19,12 @@ URL_REGEX = re.compile(
 
 
 async def _user_parser(
-        avatar: UserType, async_client: aiohttp.ClientSession
+        avatar: UserType, async_session: aiohttp.ClientSession
 ) -> Image.Image:
     if isinstance(avatar, str):
         if URL_REGEX.findall(avatar):
-            async with async_client.get(avatar) as resp:
-                return Image.open(io.BytesIO((await resp.read())))
+            async with async_session.get(avatar) as resp:
+                return Image.open(io.BytesIO(await resp.read()))
         return Image.open(avatar).convert("RGB")
 
     elif isinstance(avatar, (discord.Member, discord.User)):
@@ -51,16 +51,16 @@ def image_to_bytesio(image: Image.Image, imgformat: str = "PNG") -> io.BytesIO:
 
 def args_parser(func):
     async def wrapper(gen: Union['FunGenerator', 'RankCard', 'WelcomeCard'], *args, **kwargs):
-        async_client = gen.async_client
+        async_session = gen.async_session
         args = list(args)
 
         for index, arg in enumerate(args):
             if isinstance(arg, UserType.__args__):
-                args[index] = await _user_parser(arg, async_client)
+                args[index] = await _user_parser(arg, async_session)
 
         for key, value in kwargs.items():
             if isinstance(arg, UserType.__args__):
-                kwargs[key] = await _user_parser(value, async_client)
+                kwargs[key] = await _user_parser(value, async_session)
 
         return await func(gen, *args, **kwargs)
 

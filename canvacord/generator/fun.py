@@ -9,9 +9,9 @@ from canvacord.helper.utils import args_parser, image_to_bytesio
 
 
 class FunGenerator:
-    def __init__(self, async_client: aiohttp.ClientSession) -> None:
+    def __init__(self, async_session: aiohttp.ClientSession) -> None:
         self.image_helper = ImageHelper()
-        self.async_client = async_client
+        self.async_session = async_session
 
     @args_parser
     async def jail(self, user: UserType) -> io.BytesIO:
