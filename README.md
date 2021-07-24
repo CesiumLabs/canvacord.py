@@ -15,7 +15,7 @@ To install the library (not on pypi yet), run:
 py -m pip install canvacord
 
 # macos/linux
-python3 -m pip canvacord
+python3 -m pip install canvacord
 ```
 
 For the dev version do:
