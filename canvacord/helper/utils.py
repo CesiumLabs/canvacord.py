@@ -9,6 +9,7 @@ import aiohttp
 import discord
 from PIL import Image
 
+from functools import wraps
 from canvacord.types import UserType
 
 _T = TypeVar("_T")
@@ -50,6 +51,7 @@ def image_to_bytesio(image: Image.Image, imgformat: str = "PNG") -> io.BytesIO:
 
 
 def args_parser(func):
+    @wraps(func)
     async def wrapper(
         gen: Union["FunGenerator", "RankCard", "WelcomeCard"], *args, **kwargs
     ):
