@@ -1,6 +1,6 @@
 import io
 import re
-from typing import TypeVar, TYPE_CHECKING, Union
+from typing import TYPE_CHECKING, TypeVar, Union
 
 if TYPE_CHECKING:
     from canvacord.generator import FunGenerator, RankCard, WelcomeCard
