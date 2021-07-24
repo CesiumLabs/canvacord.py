@@ -4,7 +4,7 @@ import asyncio
 
 from PIL import Image
 
-from canvacord.cache.image import ImageCache
+from cache import ImageCache
 
 
 class ImageHelper:
