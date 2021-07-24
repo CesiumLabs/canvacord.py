@@ -17,7 +17,7 @@ class FunGenerator:
     async def jail(self, user: UserType) -> io.BytesIO:
         avatar = await asyncio.to_thread(
             self.image_helper.manipulate_image,
-            co_ordinates=(0, 0),
+            cords=(0, 0),
             background=user,
             back_size=(512, 512),
             foreground=self.image_helper.images_cache["jail.png"],
@@ -29,7 +29,7 @@ class FunGenerator:
     async def gay(self, user: UserType) -> io.BytesIO:
         avatar = await asyncio.to_thread(
             self.image_helper.manipulate_image,
-            co_ordinates=(0, 0),
+            cords=(0, 0),
             background=user,
             back_size=(512, 512),
             foreground=self.image_helper.images_cache["gay.png"],
@@ -42,7 +42,7 @@ class FunGenerator:
     async def jokeoverhead(self, user: UserType) -> io.BytesIO:
         avatar = await asyncio.to_thread(
             self.image_helper.manipulate_image,
-            co_ordinates=(150, 150),
+            cords=(150, 150),
             background=self.image_helper.images_cache["jokeoverhead.png"],
             foreground=user,
             fore_size=(95, 95),
@@ -53,7 +53,7 @@ class FunGenerator:
     async def hitler(self, user: UserType) -> io.BytesIO:
         avatar = await asyncio.to_thread(
             self.image_helper.manipulate_image,
-            co_ordinates=(40, 28),
+            cords=(40, 28),
             background=self.image_helper.images_cache["hitler.png"],
             foreground=user,
             fore_size=(153, 153),
@@ -64,14 +64,14 @@ class FunGenerator:
     async def spank(self, user1: UserType, user2: UserType) -> io.BytesIO:
         first_image = await asyncio.to_thread(
             self.image_helper.manipulate_image,
-            co_ordinates=(460, 100),
+            cords=(460, 100),
             background=self.image_helper.images_cache["spank.png"],
             foreground=user1,
             fore_size=(180, 180),
         )
         second_image = await asyncio.to_thread(
             self.image_helper.manipulate_image,
-            co_ordinates=(710, 480),
+            cords=(710, 480),
             background=first_image,
             foreground=user2,
             fore_size=(180, 180),
@@ -82,7 +82,7 @@ class FunGenerator:
     async def wanted(self, user: UserType) -> io.BytesIO:
         avatar = await asyncio.to_thread(
             self.image_helper.manipulate_image,
-            co_ordinates=(269, 451),
+            cords=(269, 451),
             background=self.image_helper.images_cache["wanted.png"],
             foreground=user,
             fore_size=(395, 395),
