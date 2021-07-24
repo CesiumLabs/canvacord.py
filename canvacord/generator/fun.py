@@ -20,7 +20,9 @@ class FunGenerator:
             x=0,
             y=0,
             background=user,
+            back_size=(512, 512),
             foreground=self.image_helper.images_cache["jail.png"],
+            fore_size=(512, 512)
         )
         return image_to_bytesio(avatar)
 
@@ -31,7 +33,9 @@ class FunGenerator:
             x=0,
             y=0,
             background=user,
+            back_size=(512, 512),
             foreground=self.image_helper.images_cache["gay.png"],
+            fore_size=(512, 512),
             fore_transparency=80,
         )
         return image_to_bytesio(avatar)
@@ -44,7 +48,7 @@ class FunGenerator:
             y=150,
             background=self.image_helper.images_cache["jokeoverhead.png"],
             foreground=user,
-            fore_size=0.35,
+            fore_size=(95, 95),
         )
         return image_to_bytesio(avatar)
 
@@ -56,7 +60,7 @@ class FunGenerator:
             y=28,
             background=self.image_helper.images_cache["hitler.png"],
             foreground=user,
-            fore_size=0.6,
+            fore_size=(153, 153),
         )
         return image_to_bytesio(avatar)
 
