@@ -15,8 +15,7 @@ class FunGenerator:
 
     @args_parser
     async def jail(self, user: UserType) -> io.BytesIO:
-        avatar = await asyncio.to_thread(
-            self.image_helper.manipulate_image,
+        avatar = await self.image_helper.manipulate_image(
             cords=(0, 0),
             background=user,
             back_size=(512, 512),
@@ -27,8 +26,7 @@ class FunGenerator:
 
     @args_parser
     async def gay(self, user: UserType) -> io.BytesIO:
-        avatar = await asyncio.to_thread(
-            self.image_helper.manipulate_image,
+        avatar = await self.image_helper.manipulate_image(
             cords=(0, 0),
             background=user,
             back_size=(512, 512),
@@ -40,8 +38,7 @@ class FunGenerator:
 
     @args_parser
     async def jokeoverhead(self, user: UserType) -> io.BytesIO:
-        avatar = await asyncio.to_thread(
-            self.image_helper.manipulate_image,
+        avatar = await self.image_helper.manipulate_image(
             cords=(150, 150),
             background=self.image_helper.images_cache["jokeoverhead.png"],
             foreground=user,
@@ -51,8 +48,7 @@ class FunGenerator:
 
     @args_parser
     async def hitler(self, user: UserType) -> io.BytesIO:
-        avatar = await asyncio.to_thread(
-            self.image_helper.manipulate_image,
+        avatar = await self.image_helper.manipulate_image(
             cords=(40, 28),
             background=self.image_helper.images_cache["hitler.png"],
             foreground=user,
@@ -62,15 +58,13 @@ class FunGenerator:
 
     @args_parser
     async def spank(self, user1: UserType, user2: UserType) -> io.BytesIO:
-        first_image = await asyncio.to_thread(
-            self.image_helper.manipulate_image,
+        first_image = await self.image_helper.manipulate_image(
             cords=(460, 100),
             background=self.image_helper.images_cache["spank.png"],
             foreground=user1,
             fore_size=(180, 180),
         )
-        second_image = await asyncio.to_thread(
-            self.image_helper.manipulate_image,
+        second_image = await self.image_helper.manipulate_image(
             cords=(710, 480),
             background=first_image,
             foreground=user2,
@@ -80,8 +74,7 @@ class FunGenerator:
 
     @args_parser
     async def wanted(self, user: UserType) -> io.BytesIO:
-        avatar = await asyncio.to_thread(
-            self.image_helper.manipulate_image,
+        avatar = await self.image_helper.manipulate_image(
             cords=(269, 451),
             background=self.image_helper.images_cache["wanted.png"],
             foreground=user,
