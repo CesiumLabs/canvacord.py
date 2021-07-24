@@ -34,7 +34,7 @@ class ImageHelper:
     @classmethod
     def manipulate_image(
         cls,
-        co_ordinates: tuple[int, int],
+        cords: tuple[int, int],
         background: Image.Image,
         foreground: Image.Image,
         back_size: Union[float, tuple[int, int]] = 1,
@@ -52,5 +52,5 @@ class ImageHelper:
         if fore_transparency != 255:
             foreground.putalpha(fore_transparency)
 
-        background.paste(foreground, co_ordinates,mask=foreground)
+        background.paste(foreground, cords, mask=foreground)
         return background
