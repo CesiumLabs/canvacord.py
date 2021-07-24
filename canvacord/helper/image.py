@@ -4,7 +4,7 @@ import asyncio
 
 from PIL import Image
 
-from cache import ImageCache
+from .cache import ImageCache
 
 
 class ImageHelper:
