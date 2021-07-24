@@ -1,5 +1,6 @@
 from pathlib import Path
 from typing import Optional, Union
+import asyncio
 
 from PIL import Image
 
@@ -32,7 +33,7 @@ class ImageHelper:
             return img.resize(size)
 
     @classmethod
-    def manipulate_image(
+    def _manipulate_image(
         cls,
         cords: tuple[int, int],
         background: Image.Image,
@@ -54,3 +55,11 @@ class ImageHelper:
 
         background.paste(foreground, cords, mask=foreground)
         return background
+
+    @classmethod
+    async def manipulate_image(cls, *args, **kwargs) -> Image.Image:
+        return await asyncio.to_thread(
+            cls._manipulate_image,
+            *args,
+            **kwargs
+        )
