@@ -10,9 +10,9 @@ IMAGE_ASSET_DIRECTORY = Path("canvacord/assets/images")
 FONT_ASSET_DIRECTORY = Path("canvacord/assets/fonts")
 
 class ImageCache:
-    def __init__(self, directory: Optional[str] = None, cache_dir: Optional[dict] = None) -> None:
+    def __init__(self, directory: Optional[str] = None, cache_dict: Optional[dict] = None) -> None:
         self.directory = directory or IMAGE_ASSET_DIRECTORY
-        self.images_cache = cache_dir or {} 
+        self.images_cache = cache_dict or {} 
 
         self.load_images(self.directory)
 
@@ -28,9 +28,9 @@ class ImageCache:
         return self.images_cache
 
 class FontCache:
-    def __init__(self, directory: Optional[str] = None, cache_dir : Optional[dict] = None) -> None:
+    def __init__(self, directory: Optional[str] = None, cache_dict : Optional[dict] = None) -> None:
         self.directory = directory or FONT_ASSET_DIRECTORY
-        self.font_cache = cache_dir or {} 
+        self.font_cache = cache_dict or {} 
 
         self.load_fonts(self.directory)
 
