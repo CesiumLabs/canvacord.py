@@ -27,7 +27,7 @@ class FunGenerator:
             background=user,
             back_size=(512, 512),
             foreground=self.image_helper.images_cache["jail.png"],
-            fore_size=(512, 512)
+            fore_size=(512, 512),
         )
         return image_to_bytesio(avatar)
 

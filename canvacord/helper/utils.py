@@ -5,11 +5,12 @@ from typing import TYPE_CHECKING, TypeVar, Union
 if TYPE_CHECKING:
     from canvacord.generator import FunGenerator, RankCard, WelcomeCard
 
+from functools import wraps
+
 import aiohttp
 import discord
 from PIL import Image
 
-from functools import wraps
 from canvacord.types import UserType
 
 _T = TypeVar("_T")
