@@ -15,7 +15,7 @@ class FunGenerator:
     @args_parser
     async def jail(self, user: UserType) -> io.BytesIO:
         """
-        Put someone in jail
+        Adds bars overlay over the user param.
 
         :param user: The image to be kept inside bars
         :type user: UserType
@@ -34,7 +34,7 @@ class FunGenerator:
     @args_parser
     async def gay(self, user: UserType) -> io.BytesIO:
         """
-        Is it just me or that person kinda gae
+        Adds a rainbow-transparent overlay over user param.
 
         :param user: The user to be overlayed with rainbow
         :type user: UserType
@@ -54,7 +54,7 @@ class FunGenerator:
     @args_parser
     async def jokeoverhead(self, user: UserType) -> io.BytesIO:
         """
-        Don't try, its over your head
+        Pastes user onto "jokeoverhead.png" image.
 
         :param user: The user to have jokeoverhead
         :type user: UserType
@@ -72,7 +72,7 @@ class FunGenerator:
     @args_parser
     async def hitler(self, user: UserType) -> io.BytesIO:
         """
-        Its hitler, what did you expect?
+        Pastes user onto "hitler.png" image.
 
         :param user: The user who is worse the hitler
         :type user: UserType
@@ -90,7 +90,7 @@ class FunGenerator:
     @args_parser
     async def spank(self, user1: UserType, user2: UserType) -> io.BytesIO:
         """
-        Spanks your T H I C C ass
+        Pastes user onto "spank.png" image with the following format: user1 spanking user2.
 
         :param user1: User to spank
         :type user1: UserType
@@ -116,7 +116,7 @@ class FunGenerator:
     @args_parser
     async def wanted(self, user: UserType) -> io.BytesIO:
         """
-        Adds user to the wanted list
+        Pastes user onto "wanted.png" image.
 
         :param user: The user to be kept in the wanted list
         :type user: UserType
