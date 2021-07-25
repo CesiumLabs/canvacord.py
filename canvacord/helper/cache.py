@@ -36,7 +36,8 @@ class FontCache:
 
     def load_fonts(self, directory: str, size: int = 10) -> FontCacheDict:
         font_cache: ImageCacheDict = {
-            item: ImageFont.truetype(directory + '/' + item, size=size)
+            item: ImageFont.truetype(directory / item, size=size)
+
             for item in os.listdir(directory)
             if item.endswith('.ttf')
         }
