@@ -1,6 +1,6 @@
 import io
 import re
-from typing import TYPE_CHECKING, TypeVar, Union
+from typing import TYPE_CHECKING, Union
 
 if TYPE_CHECKING:
     from canvacord.generator import FunGenerator, RankCard, WelcomeCard
@@ -12,8 +12,6 @@ import discord
 from PIL import Image
 
 from canvacord.types import UserType
-
-_T = TypeVar("_T")
 
 URL_REGEX = re.compile(
     "http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*(),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+"
