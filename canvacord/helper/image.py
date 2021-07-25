@@ -1,6 +1,6 @@
+import asyncio
 from pathlib import Path
 from typing import Optional, Union
-import asyncio
 
 from PIL import Image
 
@@ -38,10 +38,10 @@ class ImageHelper:
         cords: tuple[int, int],
         background: Image.Image,
         foreground: Image.Image,
-        back_size: Union[float, tuple[int, int]] = 1,
-        back_transparency: int = 255,
-        fore_size: Union[float, tuple[int, int]] = 1,
-        fore_transparency: int = 255,
+        back_size: Union[float, tuple[int, int]],
+        back_transparency: int,
+        fore_size: Union[float, tuple[int, int]],
+        fore_transparency: int,
     ) -> Image.Image:
         if back_size != 1:
             background = cls.resize(background, back_size)
@@ -57,9 +57,23 @@ class ImageHelper:
         return background
 
     @classmethod
-    async def manipulate_image(cls, *args, **kwargs) -> Image.Image:
+    async def manipulate_image(
+        cls,
+        cords: tuple[int, int],
+        background: Image.Image,
+        foreground: Image.Image,
+        back_size: Union[float, tuple[int, int]] = 1,
+        back_transparency: int = 255,
+        fore_size: Union[float, tuple[int, int]] = 1,
+        fore_transparency: int = 255,
+    ) -> Image.Image:
         return await asyncio.to_thread(
             cls._manipulate_image,
-            *args,
-            **kwargs
+            cords,
+            background,
+            foreground,
+            back_size,
+            back_transparency,
+            fore_size,
+            fore_transparency,
         )
