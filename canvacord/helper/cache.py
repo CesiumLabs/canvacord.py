@@ -1,23 +1,24 @@
 import os
 from typing import Optional
+from pathlib import Path
 
 from PIL import Image, ImageFont
 
 from canvacord.types import ImageCacheDict, FontCacheDict
 
-IMAGE_ASSET_DIRECTORY = r'C:\Users\scorz\Desktop\canvacord-py\canvacord\assets\images'
-FONT_ASSET_DIRECTORY = r'C:\Users\scorz\Desktop\canvacord-py\canvacord\assets\fonts'
+IMAGE_ASSET_DIRECTORY = Path("canvacord/assets/images")
+FONT_ASSET_DIRECTORY = Path("canvacord/assets/fonts")
 
 class ImageCache:
-    def __init__(self, directory: Optional[str] = None) -> None:
+    def __init__(self, directory: Optional[str] = None, cache_dir: Optional[dict] = None) -> None:
         self.directory = directory or IMAGE_ASSET_DIRECTORY
-        self.images_cache = {}
+        self.images_cache = cache_dir or {} 
 
         self.load_images(self.directory)
 
     def load_images(self, directory: str) -> ImageCacheDict:
         images_cache: ImageCacheDict = {
-            item: Image.open(directory + '/' + item).convert("RGBA")
+            item: Image.open(directory / item).convert("RGBA")
             for item in os.listdir(directory)
             if item.endswith('.png')
         }
@@ -27,9 +28,9 @@ class ImageCache:
         return self.images_cache
 
 class FontCache:
-    def __init__(self, directory: Optional[str] = None) -> None:
+    def __init__(self, directory: Optional[str] = None, cache_dir : Optional[dict] = None) -> None:
         self.directory = directory or FONT_ASSET_DIRECTORY
-        self.font_cache = {}
+        self.font_cache = cache_dir or {} 
 
         self.load_fonts(self.directory)
 
