@@ -33,30 +33,6 @@ class ImageHelper:
             return img.resize(size)
 
     @classmethod
-    def _manipulate_image(
-        cls,
-        cords: tuple[int, int],
-        background: Image.Image,
-        foreground: Image.Image,
-        back_size: Union[float, tuple[int, int]],
-        back_transparency: int,
-        fore_size: Union[float, tuple[int, int]],
-        fore_transparency: int,
-    ) -> Image.Image:
-        if back_size != 1:
-            background = cls.resize(background, back_size)
-        if back_transparency != 255:
-            background.putalpha(back_transparency)
-
-        if fore_size != 1:
-            foreground = cls.resize(foreground, fore_size)
-        if fore_transparency != 255:
-            foreground.putalpha(fore_transparency)
-
-        background.paste(foreground, cords, mask=foreground)
-        return background
-
-    @classmethod
     async def manipulate_image(
         cls,
         cords: tuple[int, int],
@@ -67,13 +43,33 @@ class ImageHelper:
         fore_size: Union[float, tuple[int, int]] = 1,
         fore_transparency: int = 255,
     ) -> Image.Image:
+        def blocking_manipulate_image(**kwargs) -> Image.Image:
+            background = kwargs["background"]
+            foreground = kwargs["foreground"]
+
+            back_size = kwargs["back_size"]
+            fore_size = kwargs["fore_size"]
+
+            if back_size != 1:
+                background = cls.resize(background, kwargs["back_size"])
+            if back_transparency != 255:
+                background.putalpha(kwargs["back_transparency"])
+
+            if fore_size != 1:
+                foreground = cls.resize(foreground, kwargs["fore_size"])
+            if fore_transparency != 255:
+                foreground.putalpha(kwargs["fore_transparency"])
+
+            background.paste(foreground, kwargs["cords"], mask=foreground)
+            return background
+
         return await asyncio.to_thread(
-            cls._manipulate_image,
-            cords,
-            background,
-            foreground,
-            back_size,
-            back_transparency,
-            fore_size,
-            fore_transparency,
+            blocking_manipulate_image,
+            cords=cords,
+            background=background,
+            foreground=foreground,
+            back_size=back_size,
+            back_transparency=back_transparency,
+            fore_size=fore_size,
+            fore_transparency=fore_transparency,
         )
