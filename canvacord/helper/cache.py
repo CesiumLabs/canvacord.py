@@ -3,7 +3,7 @@ from typing import Optional
 
 from PIL import Image, ImageFont
 
-from canvacord.types import ImageCacheDict
+from canvacord.types import ImageCacheDict, FontCacheDict
 
 IMAGE_ASSET_DIRECTORY = r'C:\Users\scorz\Desktop\canvacord-py\canvacord\assets\images'
 FONT_ASSET_DIRECTORY = r'C:\Users\scorz\Desktop\canvacord-py\canvacord\assets\fonts'
@@ -33,7 +33,7 @@ class FontCache:
 
         self.load_fonts(self.directory)
 
-    def load_fonts(self, directory: str, size: int = 10) -> ImageCacheDict:
+    def load_fonts(self, directory: str, size: int = 10) -> FontCacheDict:
         font_cache: ImageCacheDict = {
             item: ImageFont.truetype(directory + '/' + item, size=size)
             for item in os.listdir(directory)
