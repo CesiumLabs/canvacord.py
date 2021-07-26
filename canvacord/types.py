@@ -1,3 +1,4 @@
+"""Annotations used throughout the codebase."""
 import io
 from typing import Union
 
