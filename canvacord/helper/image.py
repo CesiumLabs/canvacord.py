@@ -1,5 +1,5 @@
+"""Image helpers for canvacord."""
 import asyncio
-from pathlib import Path
 from typing import Optional, Union
 
 from PIL import Image
@@ -10,9 +10,17 @@ from .cache import ImageCache
 class ImageHelper:
     def __init__(
         self,
-        image_asset_directory: Optional[Path] = None,
+        image_asset_directory: Optional[str] = None,
         images_cache: Optional[ImageCache] = None,
     ) -> None:
+        """
+        Initialize class variables.
+
+        :param image_asset_directory: path from where to cache images
+        :rtype image_asset_directory: Optional[str]
+        :param images_cache: premade images_cache object
+        :rtype images_cache: Optional[ImageCache]
+        """
         self._image_asset_directory = image_asset_directory
 
         # User can pass custom ImageClass object
@@ -27,6 +35,7 @@ class ImageHelper:
     def resize(
         cls, img: Image.Image, size: Union[float, tuple[int, int]]
     ) -> Image.Image:
+        """Resize a image."""
         if isinstance(size, float):
             return img.resize([int(size * s) for s in img.size])
         elif isinstance(size, tuple):
@@ -43,25 +52,38 @@ class ImageHelper:
         fore_size: Union[float, tuple[int, int]] = 1,
         fore_transparency: int = 255,
     ) -> Image.Image:
+        """
+        A helper function to handle, manipulate images.
+
+        :param cords: cords as to where to paste foreground onto background
+        :rtype cords: tuple[int, int]
+        :param background: background image
+        :rtype cords: Image.Image
+        :param foreground: foreground image
+        :rtype cords: Image.Image
+        :param back_size: size of background image
+        :rtype cords: Union[float, tuple[int, int]]
+        :param back_transparency: transparency of backgorund image
+        :rtype cords: int
+        :param fore_size: size of foreground image
+        :rtype cords: Union[float, tuple[int, int]]
+        :param fore_transparency: transparency of foreground image
+        :rtype cords: int
+        :return: Image.Image
+        """
         def blocking_manipulate_image(**kwargs) -> Image.Image:
-            background = kwargs["background"]
-            foreground = kwargs["foreground"]
-
-            back_size = kwargs["back_size"]
-            fore_size = kwargs["fore_size"]
-
-            if back_size != 1:
-                background = cls.resize(background, kwargs["back_size"])
+            if kwargs["back_size"] != 1:
+                kwargs["background"] = cls.resize(kwargs["background"], kwargs["back_size"])
             if back_transparency != 255:
-                background.putalpha(kwargs["back_transparency"])
+                kwargs["background"].putalpha(kwargs["back_transparency"])
 
-            if fore_size != 1:
-                foreground = cls.resize(foreground, kwargs["fore_size"])
+            if kwargs["fore_size"] != 1:
+                kwargs["foreground"] = cls.resize(kwargs["foreground"], kwargs["fore_size"])
             if fore_transparency != 255:
-                foreground.putalpha(kwargs["fore_transparency"])
+                kwargs["foreground"].putalpha(kwargs["fore_transparency"])
 
-            background.paste(foreground, kwargs["cords"], mask=foreground)
-            return background
+            kwargs["background"].paste(kwargs["foreground"], kwargs["cords"], mask=kwargs["foreground"])
+            return kwargs["background"]
 
         return await asyncio.to_thread(
             blocking_manipulate_image,
