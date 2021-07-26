@@ -2,7 +2,7 @@
 import asyncio
 from typing import Optional, Union
 
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 
 from .cache import ImageCache
 
@@ -40,6 +40,32 @@ class ImageHelper:
             return img.resize([int(size * s) for s in img.size])
         elif isinstance(size, tuple):
             return img.resize(size)
+
+    @classmethod
+    def add_text(
+        cls,
+        img: Image.Image,
+        text: str,
+        cords: tuple[int, int, int],
+        font: ImageFont.FreeTypeFont,
+        fill: int = 255
+    ):
+        """
+        Add text onto an image.
+
+        :param fill: fill for the text
+        :rtype fill: int
+        :param font: font of the text
+        :rtype font: ImageFont.
+        :param img: image for the text to be added onto
+        :rtype img: Image.Image
+        :param text: text to be added
+        :rtype text: str
+        :param cords: tuple[int, int, int]
+        :rtype cords: Union[tuple, list]
+        :return:
+        """
+        return ImageDraw.Draw(img).text(cords, text, fill, font)
 
     @classmethod
     async def manipulate_image(
