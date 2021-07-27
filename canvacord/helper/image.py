@@ -4,7 +4,9 @@ from typing import Optional, Union
 
 from PIL import Image, ImageDraw, ImageFont
 
-from .cache import ImageCache
+from canvacord.types import FontCacheDict, ImageCacheDict
+
+from .cache import FontCache, ImageCache
 
 
 class ImageHelper:
@@ -12,24 +14,39 @@ class ImageHelper:
         self,
         image_asset_directory: Optional[str] = None,
         images_cache: Optional[ImageCache] = None,
+        images_cache_dict: Optional[ImageCacheDict] = None,
+        font_asset_directory: Optional[str] = None,
+        fonts_cache: Optional[FontCache] = None,
+        fonts_cache_dict: Optional[FontCacheDict] = None,
     ) -> None:
         """
-        Initialize class variables.
+        Initialize the ImageHelper class
 
-        :param image_asset_directory: path from where to cache images
-        :rtype image_asset_directory: Optional[str]
-        :param images_cache: premade images_cache object
-        :rtype images_cache: Optional[ImageCache]
+        :param image_asset_directory: Path to cache images
+        :type image_asset_directory: Optional[str]
+        :param images_cache: Premade ImageCache object
+        :type images_cache: Optional[ImageCache]
+        :param images_cache_dict: Dictionary of the cached images
+        :type images_cache_dict: Optional[ImageCacheDict]
+        :param font_asset_directory: Path to cache fonts
+        :type font_asset_directory: Optional[str]
+        :param fonts_cache: Permade FontsCache object
+        :type fonts_cache: Optional[FontCache]
+        :param fonts_cache_dict: Dictonary of cached font bytes
+        :type fonts_cache_dict: Optional[FontCacheDict]
         """
-        self._image_asset_directory = image_asset_directory
-
         # User can pass custom ImageClass object
+        self.images_cache = (
+            images_cache
+            if images_cache
+            else ImageCache(image_asset_directory, images_cache_dict)
+        ).images_cache
 
-        self._assets = (
-            images_cache if images_cache else ImageCache(self._image_asset_directory)
+        self.fonts_cache = (
+            fonts_cache
+            if fonts_cache
+            else FontCache(font_asset_directory, fonts_cache_dict)
         )
-
-        self.images_cache = self._assets.images_cache
 
     @classmethod
     def resize(
@@ -48,7 +65,7 @@ class ImageHelper:
         text: str,
         cords: tuple[int, int, int],
         font: ImageFont.FreeTypeFont,
-        fill: int = 255
+        fill: int = 255,
     ):
         """
         Add text onto an image.
@@ -97,18 +114,25 @@ class ImageHelper:
         :rtype cords: int
         :return: Image.Image
         """
+
         def blocking_manipulate_image(**kwargs) -> Image.Image:
             if kwargs["back_size"] != 1:
-                kwargs["background"] = cls.resize(kwargs["background"], kwargs["back_size"])
+                kwargs["background"] = cls.resize(
+                    kwargs["background"], kwargs["back_size"]
+                )
             if back_transparency != 255:
                 kwargs["background"].putalpha(kwargs["back_transparency"])
 
             if kwargs["fore_size"] != 1:
-                kwargs["foreground"] = cls.resize(kwargs["foreground"], kwargs["fore_size"])
+                kwargs["foreground"] = cls.resize(
+                    kwargs["foreground"], kwargs["fore_size"]
+                )
             if fore_transparency != 255:
                 kwargs["foreground"].putalpha(kwargs["fore_transparency"])
 
-            kwargs["background"].paste(kwargs["foreground"], kwargs["cords"], mask=kwargs["foreground"])
+            kwargs["background"].paste(
+                kwargs["foreground"], kwargs["cords"], mask=kwargs["foreground"]
+            )
             return kwargs["background"]
 
         return await asyncio.to_thread(

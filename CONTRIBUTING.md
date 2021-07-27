@@ -14,8 +14,8 @@ First, thanks for taking the time to contribute! ❤️ All contributions are we
 
 - Follow `PEP8` rules
 - We use [Sphinx](https://sphinx-rtd-tutorial.readthedocs.io/en/latest/docstrings.html) docstrings
-- Format your code nicely.
-- Lines shouldn't be longer than 127 characters
-- Your code must be typehinted. Look into `pyright` or `pylance` type checkers if you do not have one.
-- Write efficient and clean code.
-
+- Your code must be formatted using [black](https://pypi.org/project/black/) 
+- You should sort imports using [isort](https://pypi.org/project/isort/) 
+- You should run tests using [pytest](https://pypi.org/project/pytest/) before creating a pull request
+- Your code must be typehinted. Look into `pyright` or `pylance` type checkers if you do not have one
+- Write efficient and clean code
