@@ -82,16 +82,14 @@ class ImageHelper:
         :rtype cords: Union[tuple, list]
         :return:
         """
+
         def blocking_add_text(**kwargs):
-            return ImageDraw.Draw(kwargs['img']).text(kwargs['cords'], kwargs['text'], kwargs['fill'], kwargs['font'])
+            return ImageDraw.Draw(kwargs["img"]).text(
+                kwargs["cords"], kwargs["text"], kwargs["fill"], kwargs["font"]
+            )
 
         return await asyncio.to_thread(
-            blocking_add_text,
-            img=img,
-            text=text,
-            cords=cords,
-            font=font,
-            fill=fill
+            blocking_add_text, img=img, text=text, cords=cords, font=font, fill=fill
         )
 
     @classmethod
