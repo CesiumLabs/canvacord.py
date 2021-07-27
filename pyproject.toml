@@ -1,13 +1,21 @@
 [tool.poetry]
-name = "canvacord-py"
+name = "canvacord"
 version = "0.0.1"
 description = "Asynchronous image manipulation library built on good intentions"
 authors = ["Samrid Pandit <samrid.pandit@gmail.com>", "Ammar <amarftw1@gmail.com>"]
 license = "MIT"
+readme = "README.md"
+repository =  "https://github.com/devsnowflake/canvacord.py"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
 packages = [{ include = "canvacord" }]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.9"
 "discord.py" = "^1.7.3"
 Pillow = "^8.3.1"
 
