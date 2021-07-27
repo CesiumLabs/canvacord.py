@@ -4,6 +4,7 @@ version = "0.0.1"
 description = "Asynchronous image manipulation library built on good intentions"
 authors = ["Samrid Pandit <samrid.pandit@gmail.com>", "Ammar <amarftw1@gmail.com>"]
 license = "MIT"
+packages = [{ include = "canvacord" }]
 
 [tool.poetry.dependencies]
 python = "^3.8"
