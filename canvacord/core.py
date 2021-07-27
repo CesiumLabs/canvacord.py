@@ -32,4 +32,9 @@ class Canvacord:
         return self._fun_client
 
     def boost_card(self, boosts: int, booster_name: str) -> BoostCard:
-        return BoostCard(self.async_session, self.image_helper, boosts=boosts, booster_name=booster_name)
+        return BoostCard(
+            self.async_session,
+            self.image_helper,
+            boosts=boosts,
+            booster_name=booster_name,
+        )
