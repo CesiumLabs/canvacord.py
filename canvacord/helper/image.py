@@ -1,6 +1,8 @@
 """Image helpers for canvacord."""
 import asyncio
-from typing import Optional, Union
+
+from typing import Optional, Union, Callable
+from typing_extensions import TypeVar, ParamSpec, Awaitable
 
 from PIL import Image, ImageDraw, ImageFont
 
@@ -8,16 +10,34 @@ from canvacord.types import FontCacheDict, ImageCacheDict
 
 from .cache import FontCache, ImageCache
 
+T = TypeVar('T')
+P = ParamSpec('P')
+
+
+def aioify(func: Callable[P, T]) -> Callable[P, Awaitable[T]]:
+    """
+    Turn sync functions into async functions using asyncio.to_thread().
+
+    :param func: func to make async
+    :rtype func: Callable[P, T]
+    """
+    async def wrapper(*args: P.args, **kwargs: P.kwargs) -> T:
+        if asyncio.iscoroutinefunction(func):
+            return await asyncio.to_thread(func, *args, **kwargs)
+        raise Exception('Function must be async.')
+
+    return wrapper
+
 
 class ImageHelper:
     def __init__(
-        self,
-        image_asset_directory: Optional[str] = None,
-        images_cache: Optional[ImageCache] = None,
-        images_cache_dict: Optional[ImageCacheDict] = None,
-        font_asset_directory: Optional[str] = None,
-        fonts_cache: Optional[FontCache] = None,
-        fonts_cache_dict: Optional[FontCacheDict] = None,
+            self,
+            image_asset_directory: Optional[str] = None,
+            images_cache: Optional[ImageCache] = None,
+            images_cache_dict: Optional[ImageCacheDict] = None,
+            font_asset_directory: Optional[str] = None,
+            fonts_cache: Optional[FontCache] = None,
+            fonts_cache_dict: Optional[FontCacheDict] = None,
     ) -> None:
         """
         Initialize the ImageHelper class
@@ -50,7 +70,7 @@ class ImageHelper:
 
     @classmethod
     def resize(
-        cls, img: Image.Image, size: Union[float, tuple[int, int]]
+            cls, img: Image.Image, size: Union[float, tuple[int, int]]
     ) -> Image.Image:
         """Resize a image."""
         if isinstance(size, float):
@@ -59,13 +79,14 @@ class ImageHelper:
             return img.resize(size)
 
     @classmethod
+    @aioify
     def add_text(
-        cls,
-        img: Image.Image,
-        text: str,
-        cords: tuple[int, int, int],
-        font: ImageFont.FreeTypeFont,
-        fill: int = 255,
+            cls,
+            img: Image.Image,
+            text: str,
+            cords: tuple[int, int, int],
+            font: ImageFont.FreeTypeFont,
+            fill: int = 255,
     ):
         """
         Add text onto an image.
@@ -80,32 +101,31 @@ class ImageHelper:
         :rtype text: str
         :param cords: tuple[int, int, int]
         :rtype cords: Union[tuple, list]
-        :return:
         """
 
-        def blocking_add_text(**kwargs):
-            return ImageDraw.Draw(kwargs["img"]).text(
-                kwargs["cords"], kwargs["text"], kwargs["fill"], kwargs["font"]
-            )
-
-        return await asyncio.to_thread(
-            blocking_add_text, img=img, text=text, cords=cords, font=font, fill=fill
-        )
+        return ImageDraw.Draw(img).text(cords, text, fill, font)
 
     @classmethod
+    @aioify
     async def manipulate_image(
-        cls,
-        cords: tuple[int, int],
-        background: Image.Image,
-        foreground: Image.Image,
-        back_size: Union[float, tuple[int, int]] = 1,
-        back_transparency: int = 255,
-        fore_size: Union[float, tuple[int, int]] = 1,
-        fore_transparency: int = 255,
+            cls,
+            cords: tuple[int, int],
+            background: Image.Image,
+            foreground: Image.Image,
+            back_size: Union[float, tuple[int, int]] = 1,
+            back_transparency: int = 255,
+            fore_size: Union[float, tuple[int, int]] = 1,
+            fore_transparency: int = 255,
+            rotate_back: int = 0,
+            rotate_fore: int = 0,
     ) -> Image.Image:
         """
         A helper function to handle, manipulate images.
 
+        :param rotate_back: how much background should be rotated in degrees
+        :rtype rotate_back: int
+        :param rotate_fore: how much foreground should be rotated in degrees
+        :rtype rotate_fore: int
         :param cords: cords as to where to paste foreground onto background
         :rtype cords: tuple[int, int]
         :param background: background image
@@ -122,34 +142,27 @@ class ImageHelper:
         :rtype cords: int
         :return: Image.Image
         """
-
-        def blocking_manipulate_image(**kwargs) -> Image.Image:
-            if kwargs["back_size"] != 1:
-                kwargs["background"] = cls.resize(
-                    kwargs["background"], kwargs["back_size"]
-                )
-            if back_transparency != 255:
-                kwargs["background"].putalpha(kwargs["back_transparency"])
-
-            if kwargs["fore_size"] != 1:
-                kwargs["foreground"] = cls.resize(
-                    kwargs["foreground"], kwargs["fore_size"]
-                )
-            if fore_transparency != 255:
-                kwargs["foreground"].putalpha(kwargs["fore_transparency"])
-
-            kwargs["background"].paste(
-                kwargs["foreground"], kwargs["cords"], mask=kwargs["foreground"]
+        if back_size != 1:
+            background = cls.resize(
+                background, back_size
             )
-            return kwargs["background"]
+        if back_transparency != 255:
+            background.putalpha(back_transparency)
 
-        return await asyncio.to_thread(
-            blocking_manipulate_image,
-            cords=cords,
-            background=background,
-            foreground=foreground,
-            back_size=back_size,
-            back_transparency=back_transparency,
-            fore_size=fore_size,
-            fore_transparency=fore_transparency,
+        if fore_size != 1:
+            foreground = cls.resize(
+                foreground, fore_size
+            )
+        if fore_transparency != 255:
+            foreground.putalpha(fore_transparency)
+
+        if rotate_back:
+            background.rotate(rotate_back)
+
+        if rotate_fore:
+            foreground.rotate(rotate_fore)
+
+        background.paste(
+            foreground, cords, mask=foreground
         )
+        return background
