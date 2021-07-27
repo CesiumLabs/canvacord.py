@@ -20,7 +20,7 @@ python3 -m pip install canvacord
 
 For the dev version do:
 
-```python
+```
 git clone https://github.com/DevSnowflake/canvacord-py
 cd canvacord-py
 ```
@@ -63,3 +63,5 @@ async def jokeoverhead(avatar: str) -> io.BytesIO:
 - If you are only seeing the warning, please access the async_session attr from Canvacord and close it yourself, as seen 
 in quick start. You may also use a context manager, as well seen in quick-start.
   
+### Where can I get support?
+- Please join this discord and head over to #canvacord-py, https://discord.gg/34VH3yPfkY
