@@ -66,7 +66,7 @@ class ImageHelper:
         cords: tuple[int, int, int],
         font: ImageFont.FreeTypeFont,
         fill: int = 255,
-    ):
+    ) -> Image.Image:
         """
         Add text onto an image.
 
