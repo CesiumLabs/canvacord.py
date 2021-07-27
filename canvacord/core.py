@@ -4,7 +4,6 @@ from typing import Optional
 import aiohttp
 
 from canvacord.generator import FunGenerator
-from canvacord.helper.cache import FontCache, ImageCache
 from canvacord.helper.image import ImageHelper
 
 
