@@ -8,8 +8,8 @@ from PIL import Image, ImageFont
 
 from canvacord.types import FontCacheDict, ImageCacheDict
 
-IMAGE_ASSET_DIRECTORY = Path(os.path.abspath(__file__)).parent / "assets/images/"
-FONT_ASSET_DIRECTORY = Path(os.path.abspath(__file__)).parent / "assets/fonts/"
+IMAGE_ASSET_DIRECTORY = Path(os.path.abspath(__file__)).parent.parent / "assets/images/"
+FONT_ASSET_DIRECTORY = Path(os.path.abspath(__file__)).parent.parent / "assets/fonts/"
 
 
 class ImageCache:
