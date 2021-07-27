@@ -59,7 +59,7 @@ class ImageHelper:
             return img.resize(size)
 
     @classmethod
-    def add_text(
+    async def add_text(
         cls,
         img: Image.Image,
         text: str,
