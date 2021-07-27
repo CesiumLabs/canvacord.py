@@ -5,7 +5,11 @@ from canvacord.helper.image import ImageHelper
 
 class BoostCard:
     def __init__(
-        self, async_session: aiohttp.ClientSession, image_helper: ImageHelper, boosts: int, booster_name: str
+        self,
+        async_session: aiohttp.ClientSession,
+        image_helper: ImageHelper,
+        boosts: int,
+        booster_name: str,
     ) -> None:
         """
         Initialize class variables.
