@@ -1,11 +1,13 @@
 """Helper functions for the image-method."""
 import io
 import re
+from collections.abc import Awaitable, Callable
 from typing import TYPE_CHECKING, TypeVar
-from typing_extensions import ParamSpec, Literal
-from collections.abc import Callable, Awaitable
+
+from typing_extensions import Literal, ParamSpec
 
 from canvacord.types import UserType
+
 if TYPE_CHECKING:
     from canvacord.generator import FunGenerator, RankCard, WelcomeCard, BoostCard
 
@@ -21,6 +23,7 @@ URL_REGEX = re.compile(
 
 T = TypeVar("T")
 P = ParamSpec("P")
+
 
 async def _user_parser(
     avatar: UserType, async_session: aiohttp.ClientSession
@@ -74,7 +77,9 @@ def image_to_bytesio(image: Image.Image, imgformat: str = "PNG") -> io.BytesIO:
 def args_parser(func: Callable[P, Awaitable[T]]) -> Callable[P, Awaitable[T]]:
     @wraps(func)
     async def wrapper(
-        gen: Literal['FunGenerator', 'RankCard', 'WelcomeCard', 'BoostCard'], *args: P.args, **kwargs: P.kwargs
+        gen: Literal["FunGenerator", "RankCard", "WelcomeCard", "BoostCard"],
+        *args: P.args,
+        **kwargs: P.kwargs
     ) -> T:
         """
         Call _user_parser() func on all arguments annotated with the UserType type.
@@ -97,4 +102,5 @@ def args_parser(func: Callable[P, Awaitable[T]]) -> Callable[P, Awaitable[T]]:
                 kwargs[key] = await _user_parser(value, async_session)
 
         return await func(gen, *arguments, **kwargs)
+
     return wrapper

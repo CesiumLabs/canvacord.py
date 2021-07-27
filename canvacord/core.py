@@ -1,11 +1,11 @@
 """The main file with all methods for the user to use."""
-from canvacord.helper.cache import FontCache, ImageCache
-from canvacord.helper.image import ImageHelper
 from typing import Optional
 
 import aiohttp
 
 from canvacord.generator import FunGenerator
+from canvacord.helper.cache import FontCache, ImageCache
+from canvacord.helper.image import ImageHelper
 
 
 class Canvacord:

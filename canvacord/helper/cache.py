@@ -1,7 +1,6 @@
 """Classes for caching purposes (images, fonts as of now)."""
-import os
 import io
-
+import os
 from pathlib import Path
 from typing import Optional
 
@@ -15,7 +14,9 @@ FONT_ASSET_DIRECTORY = Path("canvacord/assets/fonts")
 
 class ImageCache:
     def __init__(
-        self, directory: Optional[str] = None, cache_dict: Optional[ImageCacheDict] = None
+        self,
+        directory: Optional[str] = None,
+        cache_dict: Optional[ImageCacheDict] = None,
     ) -> None:
         """
         Initialize class variables as well as load images from provided directory.
@@ -51,7 +52,9 @@ class ImageCache:
 
 class FontCache:
     def __init__(
-        self, directory: Optional[str] = None, cache_dict: Optional[FontCacheDict] = None
+        self,
+        directory: Optional[str] = None,
+        cache_dict: Optional[FontCacheDict] = None,
     ) -> None:
         """
         Initialize class variables as well load fonts.
@@ -80,7 +83,7 @@ class FontCache:
 
         for item in os.listdir(directory):
             if item.endswith(".ttf"):
-                f = open(directory / item, 'rb')
+                f = open(directory / item, "rb")
                 filelike[item] = io.BytesIO(f.read())
                 f.close()
 

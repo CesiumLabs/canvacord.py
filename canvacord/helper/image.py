@@ -1,11 +1,12 @@
 """Image helpers for canvacord."""
 import asyncio
-from canvacord.types import FontCacheDict, ImageCacheDict
 from typing import Optional, Union
 
 from PIL import Image, ImageDraw, ImageFont
 
-from .cache import ImageCache, FontCache
+from canvacord.types import FontCacheDict, ImageCacheDict
+
+from .cache import FontCache, ImageCache
 
 
 class ImageHelper:
