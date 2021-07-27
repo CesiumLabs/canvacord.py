@@ -8,8 +8,10 @@ from canvacord.types import UserType
 
 
 class FunGenerator:
-    def __init__(self, async_session: aiohttp.ClientSession) -> None:
-        self.image_helper = ImageHelper()
+    def __init__(
+        self, async_session: aiohttp.ClientSession, image_helper: ImageHelper
+    ) -> None:
+        self.image_helper = image_helper
         self.async_session = async_session
 
     @args_parser
