@@ -50,6 +50,12 @@ class ImageCache:
         return self.images_cache
 
 
+    def __getitem__(self, key: str) -> Image.Image:
+        return self.images_cache[key]
+
+    def __setitem__(self, key: str, value: Image.Image) -> Image.Image:
+        self.images_cache[key] = value
+
 class FontCache:
     def __init__(
         self,
