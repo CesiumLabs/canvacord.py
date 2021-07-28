@@ -23,7 +23,7 @@ class Canvacord:
         """
         self.async_session = async_session or aiohttp.ClientSession()
 
-        self.image_helper = image_helper if image_helper else ImageHelper()
+        self.image_helper = image_helper or ImageHelper()
 
         self._fun_client = FunGenerator(self.async_session, self.image_helper)
 
