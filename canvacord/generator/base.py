@@ -30,5 +30,5 @@ class BaseGenerator(abc.ABC):
 class CardGenerator(BaseGenerator):
     @abc.abstractmethod
     @aioify
-    async def create(self) -> io.BytesIO:
+    def create(self) -> io.BytesIO:
         pass
