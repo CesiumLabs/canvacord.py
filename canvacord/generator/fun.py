@@ -1,27 +1,11 @@
 import io
 
-import aiohttp
-
-from canvacord.helper.image import ImageHelper
+from canvacord.generator import BaseGenerator
 from canvacord.helper.utils import args_parser, image_to_bytesio
 from canvacord.types import UserType
 
 
-class FunGenerator:
-    def __init__(
-        self, async_session: aiohttp.ClientSession, image_helper: ImageHelper
-    ) -> None:
-        """
-        Initialize class variables.
-
-        :param async_session: async session to be used
-        :rtype async_session: aiohttp.ClientSession
-        :param image_helper: image helper
-        :rtype image_helper: ImageHelper
-        """
-        self.image_helper = image_helper
-        self.async_session = async_session
-
+class FunGenerator(BaseGenerator):
     @args_parser
     async def jail(self, user: UserType) -> io.BytesIO:
         """
