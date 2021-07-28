@@ -64,7 +64,7 @@ class ImageHelper:
 
     @classmethod
     @aioify
-    async def add_text(
+    def add_text(
         cls,
         img: Image.Image,
         text: str,
@@ -91,7 +91,7 @@ class ImageHelper:
 
     @classmethod
     @aioify
-    async def manipulate_image(
+    def manipulate_image(
         cls,
         cords: tuple[int, int],
         background: Image.Image,
