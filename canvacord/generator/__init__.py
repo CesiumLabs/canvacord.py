@@ -1,3 +1,4 @@
+from .base import BaseGenerator, CardGenerator
 from .boostcard import BoostCard
 from .fun import FunGenerator
 from .rank import RankCard
