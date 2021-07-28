@@ -44,7 +44,7 @@ class ImageHelper:
             images_cache
             if images_cache
             else ImageCache(image_asset_directory, images_cache_dict)
-        ).images_cache
+        )
 
         self.fonts_cache = (
             fonts_cache
