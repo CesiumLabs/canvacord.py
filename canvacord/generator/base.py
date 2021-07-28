@@ -1,6 +1,5 @@
 import abc
 import io
-
 from typing import Optional
 
 import aiohttp
