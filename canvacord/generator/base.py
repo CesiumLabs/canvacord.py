@@ -1,5 +1,6 @@
 import abc
 import io
+from re import A
 from typing import Optional
 
 import aiohttp
@@ -22,8 +23,8 @@ class BaseGenerator(abc.ABC):
         :param image_helper: image helper
         :rtype image_helper: ImageHelper
         """
-        self.async_session = async_session if async_session else aiohttp.ClientSession()
-        self.image_helper = image_helper if image_helper else ImageHelper()
+        self.async_session = async_session or aiohttp.ClientSession()
+        self.image_helper = image_helper or ImageHelper()
 
 
 class CardGenerator(BaseGenerator):
