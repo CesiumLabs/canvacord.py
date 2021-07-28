@@ -80,7 +80,7 @@ def args_parser(func: Callable[P, Awaitable[T]]) -> Callable[P, Awaitable[T]]:
     async def wrapper(
         gen: Literal["FunGenerator", "RankCard", "WelcomeCard", "BoostCard"],
         *args: P.args,
-        **kwargs: P.kwargs
+        **kwargs: P.kwargs,
     ) -> T:
         """
         Call _user_parser() func on all arguments annotated with the UserType type.
@@ -105,6 +105,7 @@ def args_parser(func: Callable[P, Awaitable[T]]) -> Callable[P, Awaitable[T]]:
         return await func(gen, *arguments, **kwargs)
 
     return wrapper
+
 
 def aioify(func: Callable[P, T]) -> Callable[P, Awaitable[T]]:
     """

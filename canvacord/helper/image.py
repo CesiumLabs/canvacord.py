@@ -1,15 +1,14 @@
 """Image helpers for canvacord."""
 import asyncio
-
-from typing import Optional, Union, Callable
-from typing_extensions import TypeVar, ParamSpec, Awaitable
+from typing import Callable, Optional, Union
 
 from PIL import Image, ImageDraw, ImageFont
+from typing_extensions import Awaitable, ParamSpec, TypeVar
 
 from canvacord.types import FontCacheDict, ImageCacheDict
-from .utils import aioify
 
 from .cache import FontCache, ImageCache
+from .utils import aioify
 
 T = TypeVar("T")
 P = ParamSpec("P")

@@ -3,7 +3,7 @@ from typing import Optional
 
 import aiohttp
 
-from canvacord.generator import FunGenerator, BoostCard
+from canvacord.generator import BoostCard, FunGenerator
 from canvacord.helper.image import ImageHelper
 
 
