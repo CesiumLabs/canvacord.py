@@ -7,27 +7,12 @@ from typing_extensions import TypeVar, ParamSpec, Awaitable
 from PIL import Image, ImageDraw, ImageFont
 
 from canvacord.types import FontCacheDict, ImageCacheDict
+from .utils import aioify
 
 from .cache import FontCache, ImageCache
 
 T = TypeVar("T")
 P = ParamSpec("P")
-
-
-def aioify(func: Callable[P, T]) -> Callable[P, Awaitable[T]]:
-    """
-    Turn sync functions into async functions using asyncio.to_thread().
-
-    :param func: func to make async
-    :rtype func: Callable[P, T]
-    """
-
-    async def wrapper(*args: P.args, **kwargs: P.kwargs) -> T:
-        if asyncio.iscoroutinefunction(func):
-            return await asyncio.to_thread(func, *args, **kwargs)
-        raise Exception("Function must be async.")
-
-    return wrapper
 
 
 class ImageHelper:

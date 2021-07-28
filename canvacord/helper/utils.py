@@ -1,4 +1,5 @@
 """Helper functions for the image-method."""
+import asyncio
 import io
 import re
 from collections.abc import Awaitable, Callable
@@ -102,5 +103,20 @@ def args_parser(func: Callable[P, Awaitable[T]]) -> Callable[P, Awaitable[T]]:
                 kwargs[key] = await _user_parser(value, async_session)
 
         return await func(gen, *arguments, **kwargs)
+
+    return wrapper
+
+def aioify(func: Callable[P, T]) -> Callable[P, Awaitable[T]]:
+    """
+    Turn sync functions into async functions using asyncio.to_thread().
+
+    :param func: func to make async
+    :rtype func: Callable[P, T]
+    """
+
+    async def wrapper(*args: P.args, **kwargs: P.kwargs) -> T:
+        if asyncio.iscoroutinefunction(func):
+            return await asyncio.to_thread(func, *args, **kwargs)
+        raise RuntimeError(f"Function {func.__name__} must be async.")
 
     return wrapper
