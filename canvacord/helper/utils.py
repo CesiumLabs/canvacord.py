@@ -116,8 +116,8 @@ def aioify(func: Callable[P, T]) -> Callable[P, Awaitable[T]]:
     """
 
     async def wrapper(*args: P.args, **kwargs: P.kwargs) -> T:
-        if asyncio.iscoroutinefunction(func):
+        if not asyncio.iscoroutinefunction(func):
             return await asyncio.to_thread(func, *args, **kwargs)
-        raise RuntimeError(f"Function {func.__name__} must be async.")
+        raise RuntimeError(f"Function {func.__name__} must be sync.")
 
     return wrapper
