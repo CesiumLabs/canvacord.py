@@ -4,5 +4,5 @@ from canvacord.helper.utils import aioify
 
 class BoostCard(CardGenerator):
     @aioify
-    async def create(self, boosts: int, booster_name: str):
+    def create(self, boosts: int, booster_name: str):
         """TODO: Create the image."""
