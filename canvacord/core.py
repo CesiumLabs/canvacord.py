@@ -3,7 +3,7 @@ from typing import Optional
 
 import aiohttp
 
-from canvacord.generator import FunGenerator
+from canvacord.generator import FunGenerator, BoostCard
 from canvacord.helper.image import ImageHelper
 
 
@@ -14,7 +14,7 @@ class Canvacord:
         image_helper: Optional[ImageHelper] = None,
     ) -> None:
         """
-        The brains of the opeartion. Initialize class variables
+        The brains of the operation. Initialize class variables.
 
         :param async_session: aiohttp session, if `None`, one is cretaed which must be closed
         :type async_session: Optional[aiohttp.ClientSession]
@@ -30,3 +30,11 @@ class Canvacord:
     @property
     def fun(self) -> FunGenerator:
         return self._fun_client
+
+    def boost_card(self, boosts: int, booster_name: str) -> BoostCard:
+        return BoostCard(
+            self.async_session,
+            self.image_helper,
+            boosts=boosts,
+            booster_name=booster_name,
+        )
