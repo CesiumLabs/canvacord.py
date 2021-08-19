@@ -13,6 +13,8 @@ FONT_ASSET_DIRECTORY = Path(os.path.abspath(__file__)).parent.parent / "assets/f
 
 
 class ImageCache:
+    __slots__ = ("directory", "images_cache")
+    
     def __init__(
         self,
         directory: Optional[str] = None,
@@ -57,6 +59,8 @@ class ImageCache:
         self.images_cache[key] = value
 
 class FontCache:
+    __slots__ = ("directory", "filelike")
+    
     def __init__(
         self,
         directory: Optional[str] = None,
