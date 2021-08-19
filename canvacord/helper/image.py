@@ -14,6 +14,8 @@ P = ParamSpec("P")
 
 
 class ImageHelper:
+    __slots__ = ("images_cache", "fonts_cache", "_draw")
+    
     def __init__(
         self,
         image_asset_directory: Optional[str] = None,
@@ -51,6 +53,8 @@ class ImageHelper:
             if fonts_cache
             else FontCache(font_asset_directory, fonts_cache_dict)
         )
+        
+        self._draw = None
 
     @classmethod
     def resize(
@@ -87,7 +91,10 @@ class ImageHelper:
         :rtype cords: Union[tuple, list]
         """
 
-        return ImageDraw.Draw(img).text(cords, text, fill, font)
+        if not self._draw:
+            self._draw = ImageDraw.Draw(img)
+        
+        return self._draw.text(cords, text, fill, font)
 
     @classmethod
     @aioify
