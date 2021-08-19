@@ -6,8 +6,9 @@ import aiohttp
 from canvacord.generator import BoostCard, FunGenerator
 from canvacord.helper.image import ImageHelper
 
-
 class Canvacord:
+    __slots__ = ("async_session", "image_helper", "fun", "_fun_client")
+    
     def __init__(
         self,
         async_session: Optional[aiohttp.ClientSession] = None,
